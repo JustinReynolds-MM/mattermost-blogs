@@ -1,12 +1,12 @@
-# What's the problem?
+# Introduction
 
-Channel header buttons are <something about their convenience> but once registered, they show up in all channels. Depending on the use-case, we may not want to show them all the time and in all the channels. The's a neat little trick we can use to conditionally show or hide the button.
+Channel header buttons provide a convenient way to trigger action. But once registered, they show up in all channels, all the time. Depending on the use-case, we may not want to show them all the time and in all the channels. There's a neat little trick we can use to show or hide the button.
 
 ![image](channel-header-button.png)
 
 # Button Component
 
-We'll consider a bare minimum channel hedaer button component. Nothing fancy, with a simple render function retunring a SVG image wrapped inside a span.
+We'll consider a bare minimum channel header button component. Nothing fancy, with a simple render function returning an SVG image wrapped inside a span.
 
 ```JSX
 class ChannelHeaderButtonIcon extends React.Component {
@@ -36,14 +36,14 @@ class ChannelHeaderButtonIcon extends React.Component {
 
 # Adding Refs
 
-The way we'll be hiding the channel header button is by adding or removing a `hidden` class from button component's wrapper. By wrapper we don;'t mean the `span` wrapper we have in out component, but rather the plugin channel header button wrapper Mattermost webapp adds to all all plugin channel header buttons.
+The way we'll be hiding this button is by adding a `hidden` class to the button's wrapper. By wrapper, we don't mean the `span` we have in out component, but rather the wrapper Mattermost webapp adds to all plugin channel header buttons.
 
-To access this wrapper inside out React component we'll add refs to our component and navigate our way above in DOM hierarchy.
+To access this wrapper inside out React component, we'll add refs to it and navigate our way above in DOM hierarchy.
 
 
 ## Parent ref placeholder in state
 
-Add parent ref palceholder in component's state-
+Add parent ref placeholder in component's state-
 
 ```JSX
 getInitialState = () => {
@@ -88,7 +88,7 @@ handleRef = (ref) => {
 
 ## Show or hide the button
 
-Now we can use any condition we need and simply add or remove `hidden` class to the parent to show or hide it. We'll do this in `render()` method.
+Now we can use any condition we like to add or remove `hidden` class to the parent to show or hide it. We'll do this in the `render()` method.
 
 ```JSX
 render() {
@@ -114,15 +114,15 @@ render() {
 }
 ```
 
-To toggle the button in specific channels we can receive current channel ID here and include it in our condition. Mattermost already include current channel in the action handler for channel hedaer buttons. The channel ID can be obtained from this.
+To toggle the button in specific channels we can receive the current channel ID as props and use it in our condition. Mattermost already include the current channel in the action handler for channel header buttons.
 
 # Handling the case of plugin dropdown menu
 
-When more than five channel header buttons are registered, Mattermost combines them all into a single dropdown menu. In this case the parent node we're interested in changes.
+When registering more than five channel header buttons (all plugins combined), Mattermost combines them all into a single dropdown menu. In this case the parent node we're interested in changes.
 
 ## Finding the right parent node.
 
-We can navigate the DOM and check for presence of certain classes in one of the parent nodes to detect if we're in dropdown mode. Based on this we have two different parent nodes we want to alter.
+We can navigate the DOM and check for the presence of certain classes in one of the parent nodes to detect if we're in dropdown mode. Based on this we have two different parent nodes we want to alter.
 
 ```JSX
 getIconParentToHide = () => {
@@ -165,4 +165,8 @@ render() {
     );
 }
 ```
+
+# Conclusion
+
+By finding the right parent DOM node and adding `hidden` class to it, we can show or hide the registed channel header buttons. The approach may look flaky but works perfectly well. [Standup Raven](https://github.com/standup-raven/standup-raven) has been using it for last few months and it's working perfectly in all Mattermost versions released so far.
 
