@@ -1,8 +1,10 @@
 # Introduction
 
-Channel header buttons provide a convenient way to trigger action. But once registered, they show up in all channels, all the time. Depending on the use-case, we may not want to show them all the time and in all the channels. There's a neat little trick we can use to show or hide the button.
+Mattermost plugins are a very powerful tool for adding new features or changing existing ones. They can help you automate your workflow, help not miss notifications, improve team collaboration. And of course share cat GIFs 😸. You can override UI elements in Mattermost or add new ones to providing extra functionality. One such UI element is the channel header button.
 
 ![image](channel-header-button.png)
+
+Channel header buttons provide a convenient way to trigger action. But once registered, they show up in all channels, all the time. Depending on the use-case, we may not want to show them all the time and in all the channels. There's a neat little trick we can use to show or hide the button.
 
 # Button Component
 
